@@ -1,0 +1,15 @@
+# Python 3.11. Install torch / torchvision for your CUDA first, e.g. (CUDA 11.8):
+#   pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu118
+# flash-attn is optional but recommended (attn_implementation=flash_attention_2 in the configs):
+#   pip install flash-attn==2.7.3 --no-build-isolation
+transformers==5.8.1
+accelerate>=1.13.0
+safetensors>=0.7.0
+qwen-vl-utils==0.0.14
+decord==0.6.0
+av>=17.0.1
+opencv-python-headless>=4.10
+numpy>=2.0
+pillow>=11.0
+peft>=0.20.0
+requests>=2.32
