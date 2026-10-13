@@ -112,6 +112,7 @@ The ablations in the paper change one key of a configuration. Copy a file from
 
 | Ablation | Key | Values |
 |---|---|---|
+| Answering / verifying backbone | `answer_model_family`, `answer_model_path` | `qwen3vl` (default, Qwen3-VL-8B-Instruct), `qwen2_5vl` (Qwen2.5-VL-7B-Instruct), `qwen2vl` (Qwen2-VL-7B-Instruct); the 2B embedding model is unchanged |
 | Gate / memory encoder | `embedding_backend`, `embedding_model_path` | `qwen3vl` (default), `gme_qwen2vl`, `opsmm`, `vlm2vec`; two-tower `clip`, `siglip`, `jina_clip` |
 | Window encoding for the gate | `proposal_match_encoding` | `vit_feature_joint_decoder` (cache A, default: per-frame ViT features cached once, window re-encoded jointly by the decoder), `incremental_kv` (cache B: sliding decoder KV), `cached_frame_mean` (per-frame vectors averaged; the only option for two-tower encoders) |
 | Surge threshold | `proposal_surge_threshold` | `0.03` (default); `0.015` for encoders whose similarity moves less |
