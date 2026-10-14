@@ -58,7 +58,7 @@
     "text"
   ],
   "protocol_note": "Complete RIVER videos are replayed chronologically. Each completed chunk is encoded once into a fifo_bounded vector memory; at each question time, retrieval and 8B answering happen immediately using only retained vectors plus recent raw frames. Optional query-time 2B decoder-token scores prune the selected images after the 8B ViT and before its LLM. Both models stay resident. No proactive tasks are included.",
-  "reactive_policy": "recent_first",
+  "reactive_policy": "retrieve_first",
   "reactive_retrieval_query": "question",
   "recent_first_frames": 4,
   "oracle_evidence_frames": 4,

@@ -43,7 +43,7 @@
   "attn_implementation": "flash_attention_2",
   "dtype": "bfloat16",
   "max_new_tokens": 32,
-  "reactive_policy": "recent_first",
+  "reactive_policy": "retrieve_first",
   "reactive_retrieval_query": "question",
   "recent_first_frames": 4,
   "reactive_proposal_count": 4,

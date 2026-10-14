@@ -97,8 +97,8 @@ for StreamArena Pro) limits the number of questions.
 | Benchmark | Metric | BiSeek |
 |---|---|---|
 | StreamingBench Proactive Output | first response within ±2 s | 47.6 |
-| StreamingBench reactive | accuracy | 75.3 |
-| OVO-Bench Real-Time / Backward | accuracy | 81.8 / 53.4 |
+| StreamingBench reactive | accuracy | 73.8 |
+| OVO-Bench Real-Time / Backward | accuracy | 80.0 / 54.7 |
 | OVO-Bench Forward (SSR / CRR / REC) | accuracy | 71.1 / 73.3 / 40.3 |
 | StreamArena Pro | timing / timing + content | 20.8 / 20.3 |
 | StreamArena HR / RTP | judged accuracy | 18.6 / 30.0 |
@@ -117,7 +117,7 @@ The ablations in the paper change one key of a configuration. Copy a file from
 | Window encoding for the gate | `proposal_match_encoding` | `vit_feature_joint_decoder` (cache A, default: per-frame ViT features cached once, window re-encoded jointly by the decoder), `incremental_kv` (cache B: sliding decoder KV), `cached_frame_mean` (per-frame vectors averaged; the only option for two-tower encoders) |
 | Surge threshold | `proposal_surge_threshold` | `0.03` (default); `0.015` for encoders whose similarity moves less |
 | Sampling rate | `sample_fps` | `1.0` (default), `2.0` |
-| Reactive policy | `reactive_policy` | `recent_first` (answer from recent frames, retrieve only when needed), `retrieve_first` (always retrieve) |
+| Reactive policy | `reactive_policy` | `retrieve_first` (default: always retrieve, one 8B call per question), `recent_first` (answer from recent frames first, retrieve only when the 8B asks for it) |
 | Memory size | `max_memory_vectors` | `-1` (unbounded) or a number of vectors |
 | 2B gate alone (no 8B verifier) | `proposal_audit_only` | `true` (StreamArena Pro: `--gate-only`) |
 

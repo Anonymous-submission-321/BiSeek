@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OVO-Bench Real-Time + Backward. Main configuration: recent-first, 1 fps,
+# OVO-Bench Real-Time + Backward. Main configuration: retrieve-first, 1 fps,
 # 1-frame chunks, 128-vector memory.
 source "$(dirname "$0")/common.sh"
 CONFIG="${CONFIG:-configs/ovo_reactive.json}"

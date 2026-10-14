@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# StreamingBench reactive questions. Main configuration: recent-first, 1 fps.
+# StreamingBench reactive questions. Main configuration: retrieve-first, 1 fps.
 source "$(dirname "$0")/common.sh"
 CONFIG="${CONFIG:-configs/streamingbench_reactive.json}"
 OUT="${OUT:-outputs/StreamingBench/reactive/main}"
