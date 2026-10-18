@@ -125,7 +125,7 @@ def parse_args() -> argparse.Namespace:
         help=(
             "how long to keep watching after the question. Fixed in advance and "
             "never derived from ref_sec, which would leak the answer. 600 s "
-            "covers 98.1% of Pro questions."
+            "covers 98.1%% of Pro questions."
         ),
     )
     parser.add_argument("--poll-interval-seconds", type=float, default=0.5)
