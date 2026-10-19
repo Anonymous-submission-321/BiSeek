@@ -1303,6 +1303,7 @@ class SemanticMemoryEncoder:
         frame_keys: list[tuple[str, int]],
         feature_cache: Any,
         cache_size: int,
+        _allow_replay: bool = True,
     ) -> tuple[torch.Tensor, dict[str, Any]]:
         """Reuse exact independent-image ViT outputs, rerun the joint decoder.
 
@@ -1340,7 +1341,20 @@ class SemanticMemoryEncoder:
         tokens = getattr(self, "_joint_token_cache", None)
         if tokens is None:
             tokens = self._joint_token_cache = {}
-        replay = tokens.get((len(frames), hit_grid)) if hit_grid is not None else None
+        replay = (
+            tokens.get((len(frames), hit_grid))
+            if hit_grid is not None and _allow_replay
+            else None
+        )
+        # Replay assumes every cached frame shares hit_grid; otherwise a cached
+        # frame of another grid would be treated as uncached with no pixels to
+        # recompute it, so take the full path instead.
+        if replay is not None and any(
+            item is not None
+            and tuple(int(value) for value in item["grid"].tolist()) != hit_grid
+            for item in probe
+        ):
+            replay = None
 
         inputs: Any = None
         image_grid_thw: Any = None
@@ -1411,6 +1425,13 @@ class SemanticMemoryEncoder:
                 hits += 1
                 continue
             if pixels is None:
+                if _allow_replay:
+                    # The replayed sequence cannot cover this frame; redo the
+                    # window on the full path instead of failing the question.
+                    return self.encode_joint_images_cached_vit(
+                        frames, frame_keys, feature_cache, cache_size,
+                        _allow_replay=False,
+                    )
                 raise RuntimeError("cached-token replay reached an uncached frame")
             started = time.perf_counter()
             output = self.model.model.get_image_features(
