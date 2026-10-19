@@ -276,7 +276,7 @@ class _Meter:
         # Since transformers 4.50 `generate` lives on GenerationMixin, which the
         # *ForConditionalGeneration classes mix in beside PreTrainedModel -- so
         # patching PreTrainedModel alone missed it, and every decoded token was
-        # counted as a large call (Em-Garde smoke: 252 "calls" in 42 steps).
+        # counted as a large call (one smoke run: 252 "calls" in 42 steps).
         try:
             from transformers.generation.utils import GenerationMixin
             GenerationMixin.generate = wrap_generate(GenerationMixin.generate)

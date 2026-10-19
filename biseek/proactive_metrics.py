@@ -30,7 +30,7 @@ def load_records(path: str | Path) -> list[dict[str, Any]]:
 
 
 def ovo_ground_truth_trigger_times(record: dict[str, Any]) -> list[float]:
-    """Return the exact event timestamps used by Em-Garde's OVO online eval."""
+    """Return the event timestamps used by the OVO event-level timing proxy."""
 
     task = str(record["task"])
     if task == "CRR":
@@ -152,7 +152,7 @@ def ovo_predicted_trigger_times(
 def match_trigger_times(
     ground_truth: list[float], predictions: list[float], tolerance_seconds: float
 ) -> dict[str, Any]:
-    """Reproduce Em-Garde's one-to-one, GT-ordered @2s event matching."""
+    """One-to-one, GT-ordered event matching within a tolerance (2 s by default)."""
 
     remaining = list(sorted(float(value) for value in predictions))
     matches: list[dict[str, float]] = []
@@ -185,7 +185,7 @@ def match_trigger_times(
 def score_ovo_event_timing_proxy(
     records: list[dict[str, Any]], *, tolerance_seconds: float = 2.0
 ) -> dict[str, Any]:
-    """Score BiSeek events with Em-Garde's event-matching mathematics.
+    """Score BiSeek events with one-to-one event matching.
 
     This is a diagnostic proxy, not an official online benchmark result. BiSeek
     REC emits checkpoint count increments, while its SSR queries are registered
@@ -268,7 +268,7 @@ def score_ovo_event_timing_proxy(
         }
     return {
         "metric_math": (
-            "Em-Garde event-matching mathematics: GT is CRR clue_time, REC "
+            "Event-matching proxy: GT is CRR clue_time, REC "
             "start_times+2s, SSR start_time+2s; predictions are greedily "
             "one-to-one matched within ± tolerance; per-task precision/recall "
             "are annotation-macro averages and F1 is their harmonic mean."

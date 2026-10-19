@@ -802,8 +802,8 @@ def trajectory_reward(
     duplicates = len(matching.in_window_fires) - matching.matched
     duplicate = -float(config.duplicate_penalty) * duplicates
     false_positives = len(fires) - len(matching.in_window_fires)
-    # Linear in the spurious-call *rate*, deliberately not Em-Garde's saturating
-    # ``1 - 2^{-n_fp/n}``.  Saturation was designed for short proposal windows; on
+    # Linear in the spurious-call *rate*, deliberately not a saturating
+    # ``1 - 2^{-n_fp/n}`` penalty.  Saturation was designed for short proposal windows; on
     # these long sparse episodes it flattens after a handful of false calls, so
     # every further spurious step becomes almost free and the per-step gradient
     # for suppressing it vanishes.  Dividing by the valid step count keeps the

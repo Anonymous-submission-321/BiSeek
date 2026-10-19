@@ -251,7 +251,7 @@ def proposal_surge_candidate(
     surge_threshold: float,
     require_above_history_mean: bool,
 ) -> dict[str, Any]:
-    """Em-Garde-style proposal surge test with an explicit one-second lag."""
+    """Similarity-rise test over a fixed lookback lag (one second by default)."""
 
     current = current_scores.detach().float().cpu().reshape(-1)
     reference: tuple[float, torch.Tensor] | None = None
@@ -479,10 +479,8 @@ def verifier_label_pair(task: str) -> tuple[str, str]:
     """(negative, positive) next-token labels the verdict reads logits for.
 
     Every mode but yes_no uses the arbitrary letters A/B, which force the model
-    to bind "A means wait, B means trigger" before it can answer. Em-Garde's
-    own verifier instead asks for 'Yes'/'No' (see its
-    `Does one of the following descriptions match ...` prompt), tokens that
-    carry their own meaning. A Qwen2-VL-7B verifier returned near-tied A/B
+    to bind "A means wait, B means trigger" before it can answer. A yes/no
+    verdict instead asks for 'Yes'/'No', tokens that carry their own meaning. A Qwen2-VL-7B verifier returned near-tied A/B
     logits here (+0.80 accept, -0.59 reject, against Qwen3's +12.20/-9.94),
     which is what a failed label binding looks like, so the yes_no mode tests
     that explanation directly. REC reports a count and keeps its letters.
@@ -1641,7 +1639,7 @@ class CachedProactiveController:
 
 
 class ProposalMatchProactiveController(CachedProactiveController):
-    """Em-Garde-inspired proposal matching with a frozen Qwen3 stack.
+    """Target matching with a frozen Qwen3 stack.
 
     The 8B model compiles a small set of observable state-change proposals once
     when the standing target is registered.  The frozen Embedding-2B model then
